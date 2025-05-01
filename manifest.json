@@ -2,7 +2,7 @@
   "name": "AI Career Roadmap",
   "short_name": "AI Roadmap",
   "description": "A comprehensive one-month roadmap to prepare for AI-related job roles",
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#4f46e5",
