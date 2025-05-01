@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="A comprehensive one-month roadmap to prepare for AI-related job roles, focusing on Prompt Engineering, AI Automation, and AI Agent development.">
+    <title>🚀 One-Month AI Career Roadmap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#4f46e5">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/48/artificial-intelligence.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="https://img.icons8.com/fluency/192/artificial-intelligence.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-rocket"></i> One-Month AI Career Roadmap</h1>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+                <div class="progress-stats">
+                    <span>Overall Progress</span>
+                    <span class="progress-percentage">0%</span>
+                </div>
+            </div>
+            <div class="action-buttons" style="margin-top: 1rem;">
+                <button onclick="exportData()" class="tab-button"><i class="fas fa-download"></i> Export Data</button>
+                <button onclick="importData()" class="tab-button"><i class="fas fa-upload"></i> Import Data</button>
+                <button id="theme-toggle" class="tab-button"><i class="fas fa-moon"></i><i class="fas fa-sun"></i> Dark Mode</button>
+            </div>
+        </header>
+
+        <section id="goal">
+            <h2><i class="fas fa-bullseye"></i> Goal</h2>
+            <p>Prepare for AI-related job roles in one month, focusing on Prompt Engineering, AI Automation, and AI Agent development.</p>
+        </section>
+
+        <section id="skills-dashboard">
+            <h2><i class="fas fa-chart-line"></i> Skills Dashboard</h2>
+
+            <div class="skills-container">
+                <div class="skills-column">
+                    <h3>Technical Skills</h3>
+                    <ul class="checklist">
+                        <li><input type="checkbox" id="skill1"><label for="skill1">Prompt Engineering</label></li>
+                        <li><input type="checkbox" id="skill2"><label for="skill2">LangChain/LlamaIndex</label></li>
+                        <li><input type="checkbox" id="skill3"><label for="skill3">RAG (Retrieval-Augmented Generation)</label></li>
+                        <li><input type="checkbox" id="skill4"><label for="skill4">Python for AI</label></li>
+                        <li><input type="checkbox" id="skill5"><label for="skill5">Automation Tools (n8n, Make)</label></li>
+                        <li><input type="checkbox" id="skill6"><label for="skill6">Vector Databases</label></li>
+                        <li><input type="checkbox" id="skill7"><label for="skill7">API Integration</label></li>
+                        <li><input type="checkbox" id="skill8"><label for="skill8">Web UI for AI (Streamlit)</label></li>
+                    </ul>
+                </div>
+
+                <div class="skills-column">
+                    <h3>Projects</h3>
+                    <ul class="checklist">
+                        <li><input type="checkbox" id="project1"><label for="project1">Project 1: Advanced Prompt Engineering Portfolio</label></li>
+                        <li><input type="checkbox" id="project2"><label for="project2">Project 2: RAG-based Knowledge Assistant</label></li>
+                        <li><input type="checkbox" id="project3"><label for="project3">Project 3: AI Automation Workflow</label></li>
+                    </ul>
+                </div>
+
+                <div class="skills-column">
+                    <h3>Job Preparation</h3>
+                    <ul class="checklist">
+                        <li><input type="checkbox" id="job1"><label for="job1">Resume Optimization</label></li>
+                        <li><input type="checkbox" id="job2"><label for="job2">LinkedIn Profile Enhancement</label></li>
+                        <li><input type="checkbox" id="job3"><label for="job3">Portfolio Website</label></li>
+                        <li><input type="checkbox" id="job4"><label for="job4">Interview Preparation</label></li>
+                        <li><input type="checkbox" id="job5"><label for="job5">Job Application Strategy</label></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="weekly-schedule">
+            <h2><i class="fas fa-calendar-alt"></i> Weekly Schedule</h2>
+
+            <div class="week-tabs">
+                <button class="tab-button active" onclick="openWeek(event, 'week1')">Week 1</button>
+                <button class="tab-button" onclick="openWeek(event, 'week2')">Week 2</button>
+                <button class="tab-button" onclick="openWeek(event, 'week3')">Week 3</button>
+                <button class="tab-button" onclick="openWeek(event, 'week4')">Week 4</button>
+            </div>
+
+            <div id="week1" class="week-content active">
+                <h3>Week 1: Foundations & Prompt Engineering</h3>
+                <p class="week-focus"><em>Focus: Master prompt engineering and understand LLM capabilities</em></p>
+
+                <div class="day-container">
+                    <div class="day-card">
+                        <h4>Monday: LLM Fundamentals</h4>
+                        <div class="time-block">
+                            <h5>Morning</h5>
+                            <p>Introduction to LLMs and their capabilities</p>
+                            <p class="resource">Resource: <a href="https://www.deeplearning.ai/short-courses/" target="_blank">DeepLearning.AI Short Courses</a></p>
+                            <textarea placeholder="Notes"></textarea>
+                        </div>
+                        <div class="time-block">
+                            <h5>Afternoon</h5>
+                            <p>Set up development environment</p>
+                            <ul>
+                                <li>Install Python, VS Code, Git</li>
+                                <li>Create accounts (OpenAI, Hugging Face, GitHub)</li>
+                            </ul>
+                            <textarea placeholder="Notes"></textarea>
+                        </div>
+                        <div class="time-block">
+                            <h5>Evening</h5>
+                            <p>Experiment with ChatGPT and Claude</p>
+                            <ul>
+                                <li>Try different types of prompts</li>
+                            </ul>
+                            <textarea placeholder="Notes"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="day-card">
+                        <h4>Tuesday: Prompt Engineering Basics</h4>
+                        <div class="time-block">
+                            <h5>Morning</h5>
+                            <p>Learn prompt engineering fundamentals</p>
+                            <p class="resource">Resource: <a href="https://learnprompting.org/" target="_blank">Learn Prompting</a></p>
+                            <textarea placeholder="Notes"></textarea>
+                        </div>
+                        <div class="time-block">
+                            <h5>Afternoon</h5>
+                            <p>Practice different prompting techniques</p>
+                            <ul>
+                                <li>Zero-shot, few-shot, chain-of-thought</li>
+                            </ul>
+                            <textarea placeholder="Notes"></textarea>
+                        </div>
+                        <div class="time-block">
+                            <h5>Evening</h5>
+                            <p>Create a prompt template library</p>
+                            <textarea placeholder="Notes"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="day-card">
+                        <h4>Wednesday: Advanced Prompt Engineering</h4>
+                        <div class="time-block">
+                            <h5>Morning</h5>
+                            <p>Study advanced prompting strategies</p>
+                            <p class="resource">Resource: <a href="https://www.promptingguide.ai/" target="_blank">Prompt Engineering Guide</a></p>
+                            <textarea placeholder="Notes"></textarea>
+                        </div>
+                        <div class="time-block">
+                            <h5>Afternoon</h5>
+                            <p>Implement system prompts and role prompts</p>
+                            <textarea placeholder="Notes"></textarea>
+                        </div>
+                        <div class="time-block">
+                            <h5>Evening</h5>
+                            <p>Practice prompt optimization techniques</p>
+                            <textarea placeholder="Notes"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="day-card">
+                        <h4>Thursday: LLM APIs & Integration</h4>
+                        <div class="time-block">
+                            <h5>Morning</h5>
+                            <p>Learn to use OpenAI API</p>
+                            <p class="resource">Resource: <a href="https://platform.openai.com/docs/api-reference" target="_blank">OpenAI API Documentation</a></p>
+                            <textarea placeholder="Notes"></textarea>
+                        </div>
+                        <div class="time-block">
+                            <h5>Afternoon</h5>
+                            <p>Build a simple chatbot with OpenAI API</p>
+                            <textarea placeholder="Notes"></textarea>
+                        </div>
+                        <div class="time-block">
+                            <h5>Evening</h5>
+                            <p>Explore other LLM APIs (Anthropic, Cohere)</p>
+                            <textarea placeholder="Notes"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="day-card">
+                        <h4>Friday: Prompt Engineering Project</h4>
+                        <div class="time-block">
+                            <h5>Morning</h5>
+                            <p>Plan your prompt engineering portfolio</p>
+                            <textarea placeholder="Notes"></textarea>
+                        </div>
+                        <div class="time-block">
+                            <h5>Afternoon</h5>
+                            <p>Implement different prompt techniques</p>
+                            <textarea placeholder="Notes"></textarea>
+                        </div>
+                        <div class="time-block">
+                            <h5>Evening</h5>
+                            <p>Document your process and findings</p>
+                            <textarea placeholder="Notes"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="day-card weekend">
+                        <h4>Weekend: Project Work & Review</h4>
+                        <ul class="checklist">
+                            <li><input type="checkbox" id="w1-weekend1"><label for="w1-weekend1">Complete Prompt Engineering Portfolio project</label></li>
+                            <li><input type="checkbox" id="w1-weekend2"><label for="w1-weekend2">Review week's learning</label></li>
+                            <li><input type="checkbox" id="w1-weekend3"><label for="w1-weekend3">Prepare for Week 2</label></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="week2" class="week-content">
+                <h3>Week 2: LangChain & RAG Systems</h3>
+                <p class="week-focus"><em>Focus: Build applications with LangChain and implement RAG</em></p>
+
+                <!-- Week 2 content structure similar to Week 1 -->
+                <div class="day-container">
+                    <!-- Monday -->
+                    <div class="day-card">
+                        <h4>Monday: Introduction to LangChain</h4>
+                        <div class="time-block">
+                            <h5>Morning</h5>
+                            <p>LangChain fundamentals</p>
+                            <p class="resource">Resource: <a href="https://python.langchain.com/docs/get_started/introduction" target="_blank">LangChain Documentation</a></p>
+                            <textarea placeholder="Notes"></textarea>
+                        </div>
+                        <div class="time-block">
+                            <h5>Afternoon</h5>
+                            <p>Set up LangChain environment</p>
+                            <textarea placeholder="Notes"></textarea>
+                        </div>
+                        <div class="time-block">
+                            <h5>Evening</h5>
+                            <p>Build simple chains</p>
+                            <textarea placeholder="Notes"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Rest of Week 2 days -->
+                    <!-- Similar structure for Tuesday through Friday -->
+                    <!-- Weekend -->
+                    <div class="day-card weekend">
+                        <h4>Weekend: Project Work & Review</h4>
+                        <ul class="checklist">
+                            <li><input type="checkbox" id="w2-weekend1"><label for="w2-weekend1">Complete RAG-based Knowledge Assistant project</label></li>
+                            <li><input type="checkbox" id="w2-weekend2"><label for="w2-weekend2">Review week's learning</label></li>
+                            <li><input type="checkbox" id="w2-weekend3"><label for="w2-weekend3">Prepare for Week 3</label></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="week3" class="week-content">
+                <h3>Week 3: Automation & AI Agents</h3>
+                <p class="week-focus"><em>Focus: Learn automation tools and build AI agents</em></p>
+
+                <!-- Week 3 content structure similar to Week 1 -->
+                <!-- Abbreviated for brevity -->
+                <div class="day-container">
+                    <div class="day-card weekend">
+                        <h4>Weekend: Project Work & Review</h4>
+                        <ul class="checklist">
+                            <li><input type="checkbox" id="w3-weekend1"><label for="w3-weekend1">Complete AI Automation Workflow project</label></li>
+                            <li><input type="checkbox" id="w3-weekend2"><label for="w3-weekend2">Review week's learning</label></li>
+                            <li><input type="checkbox" id="w3-weekend3"><label for="w3-weekend3">Prepare for Week 4</label></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="week4" class="week-content">
+                <h3>Week 4: Portfolio Finalization & Job Preparation</h3>
+                <p class="week-focus"><em>Focus: Polish projects and prepare for job applications</em></p>
+
+                <!-- Week 4 content structure similar to Week 1 -->
+                <!-- Abbreviated for brevity -->
+                <div class="day-container">
+                    <div class="day-card weekend">
+                        <h4>Weekend: Final Review & Launch</h4>
+                        <ul class="checklist">
+                            <li><input type="checkbox" id="w4-weekend1"><label for="w4-weekend1">Finalize all projects and portfolio</label></li>
+                            <li><input type="checkbox" id="w4-weekend2"><label for="w4-weekend2">Create application schedule</label></li>
+                            <li><input type="checkbox" id="w4-weekend3"><label for="w4-weekend3">Prepare for first applications</label></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="learning-resources">
+            <h2><i class="fas fa-book"></i> Learning Resources</h2>
+
+            <div class="resources-container">
+                <div class="resource-category">
+                    <h3>Prompt Engineering</h3>
+                    <ul>
+                        <li><a href="https://learnprompting.org/" target="_blank">Learn Prompting</a></li>
+                        <li><a href="https://www.promptingguide.ai/" target="_blank">Prompt Engineering Guide</a></li>
+                        <li><a href="https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/" target="_blank">DeepLearning.AI Prompt Engineering Course</a></li>
+                    </ul>
+                </div>
+
+                <div class="resource-category">
+                    <h3>LangChain & RAG</h3>
+                    <ul>
+                        <li><a href="https://python.langchain.com/docs/get_started/introduction" target="_blank">LangChain Documentation</a></li>
+                        <li><a href="https://docs.llamaindex.ai/en/stable/" target="_blank">LlamaIndex Documentation</a></li>
+                        <li><a href="https://www.deeplearning.ai/short-courses/building-applications-with-vector-databases/" target="_blank">Building LLM Applications Course</a></li>
+                    </ul>
+                </div>
+
+                <div class="resource-category">
+                    <h3>Automation</h3>
+                    <ul>
+                        <li><a href="https://academy.n8n.io/" target="_blank">n8n Academy</a></li>
+                        <li><a href="https://www.make.com/en/help/tutorials" target="_blank">Make.com Tutorials</a></li>
+                        <li><a href="https://zapier.com/learn" target="_blank">Zapier Learn</a></li>
+                    </ul>
+                </div>
+
+                <div class="resource-category">
+                    <h3>AI Agents</h3>
+                    <ul>
+                        <li><a href="https://python.langchain.com/docs/modules/agents/" target="_blank">LangChain Agents Guide</a></li>
+                        <li><a href="https://docs.agpt.co/" target="_blank">AutoGPT Documentation</a></li>
+                        <li><a href="https://github.com/yoheinakajima/babyagi" target="_blank">BabyAGI Tutorial</a></li>
+                    </ul>
+                </div>
+
+                <div class="resource-category">
+                    <h3>Job Preparation</h3>
+                    <ul>
+                        <li><a href="https://www.techinterviewhandbook.org/" target="_blank">Tech Interview Handbook</a></li>
+                        <li><a href="https://www.overleaf.com/latex/templates/tagged/cv" target="_blank">AI Resume Templates</a></li>
+                        <li><a href="https://rahuldkjain.github.io/gh-profile-readme-generator/" target="_blank">GitHub Profile README Generator</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="project-templates">
+            <h2><i class="fas fa-tools"></i> Project Templates</h2>
+
+            <div class="project-cards">
+                <div class="project-card">
+                    <h3>Project 1: Advanced Prompt Engineering Portfolio</h3>
+                    <p><strong>Objective</strong>: Demonstrate your prompt engineering skills across different use cases</p>
+
+                    <div class="project-details">
+                        <div class="project-components">
+                            <h4>Components</h4>
+                            <ul>
+                                <li>Collection of optimized prompts for different tasks</li>
+                                <li>Comparison of different prompting techniques</li>
+                                <li>Performance metrics and analysis</li>
+                                <li>User interface for testing prompts</li>
+                            </ul>
+                        </div>
+
+                        <div class="project-tech">
+                            <h4>Technologies</h4>
+                            <ul>
+                                <li>OpenAI API / Anthropic API</li>
+                                <li>Python</li>
+                                <li>Streamlit (optional)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h3>Project 2: RAG-based Knowledge Assistant</h3>
+                    <p><strong>Objective</strong>: Build a system that answers questions based on custom documents</p>
+
+                    <div class="project-details">
+                        <div class="project-components">
+                            <h4>Components</h4>
+                            <ul>
+                                <li>Document processing pipeline</li>
+                                <li>Vector database for storage</li>
+                                <li>Retrieval mechanism</li>
+                                <li>Response generation with citations</li>
+                                <li>Simple web interface</li>
+                            </ul>
+                        </div>
+
+                        <div class="project-tech">
+                            <h4>Technologies</h4>
+                            <ul>
+                                <li>LangChain or LlamaIndex</li>
+                                <li>Vector database (Chroma, FAISS)</li>
+                                <li>OpenAI API</li>
+                                <li>Streamlit</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h3>Project 3: AI Automation Workflow</h3>
+                    <p><strong>Objective</strong>: Create an automated workflow that uses AI to process and transform data</p>
+
+                    <div class="project-details">
+                        <div class="project-components">
+                            <h4>Components</h4>
+                            <ul>
+                                <li>Data collection from multiple sources</li>
+                                <li>AI processing (classification, extraction, summarization)</li>
+                                <li>Automated actions based on AI output</li>
+                                <li>Monitoring and reporting</li>
+                            </ul>
+                        </div>
+
+                        <div class="project-tech">
+                            <h4>Technologies</h4>
+                            <ul>
+                                <li>n8n, Make, or similar</li>
+                                <li>OpenAI API</li>
+                                <li>Python scripts</li>
+                                <li>Web APIs</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="job-tracker">
+            <h2><i class="fas fa-briefcase"></i> Job Application Tracker</h2>
+
+            <div class="table-container">
+                <table id="job-table">
+                    <thead>
+                        <tr>
+                            <th>Company</th>
+                            <th>Position</th>
+                            <th>Application Date</th>
+                            <th>Status</th>
+                            <th>Follow-up</th>
+                            <th>Notes</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Empty row as template -->
+                        <tr>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td><button class="delete-row"><i class="fas fa-trash"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button id="add-job-row" class="add-button"><i class="fas fa-plus"></i> Add Job Application</button>
+            </div>
+        </section>
+
+        <section id="weekly-goals">
+            <h2><i class="fas fa-bullseye"></i> Weekly Goals & Reflections</h2>
+
+            <div class="goals-tabs">
+                <button class="goal-tab-button active" onclick="openGoalWeek(event, 'goal-week1')">Week 1</button>
+                <button class="goal-tab-button" onclick="openGoalWeek(event, 'goal-week2')">Week 2</button>
+                <button class="goal-tab-button" onclick="openGoalWeek(event, 'goal-week3')">Week 3</button>
+                <button class="goal-tab-button" onclick="openGoalWeek(event, 'goal-week4')">Week 4</button>
+            </div>
+
+            <div id="goal-week1" class="goal-content active">
+                <div class="goal-section">
+                    <h3>Goals</h3>
+                    <textarea placeholder="Enter your goals for Week 1"></textarea>
+                </div>
+
+                <div class="goal-section">
+                    <h3>Accomplishments</h3>
+                    <textarea placeholder="Enter your accomplishments for Week 1"></textarea>
+                </div>
+
+                <div class="goal-section">
+                    <h3>Challenges</h3>
+                    <textarea placeholder="Enter challenges faced during Week 1"></textarea>
+                </div>
+
+                <div class="goal-section">
+                    <h3>Next Steps</h3>
+                    <textarea placeholder="Enter next steps after Week 1"></textarea>
+                </div>
+            </div>
+
+            <div id="goal-week2" class="goal-content">
+                <!-- Similar structure for Week 2 -->
+                <div class="goal-section">
+                    <h3>Goals</h3>
+                    <textarea placeholder="Enter your goals for Week 2"></textarea>
+                </div>
+
+                <div class="goal-section">
+                    <h3>Accomplishments</h3>
+                    <textarea placeholder="Enter your accomplishments for Week 2"></textarea>
+                </div>
+
+                <div class="goal-section">
+                    <h3>Challenges</h3>
+                    <textarea placeholder="Enter challenges faced during Week 2"></textarea>
+                </div>
+
+                <div class="goal-section">
+                    <h3>Next Steps</h3>
+                    <textarea placeholder="Enter next steps after Week 2"></textarea>
+                </div>
+            </div>
+
+            <div id="goal-week3" class="goal-content">
+                <!-- Similar structure for Week 3 -->
+                <div class="goal-section">
+                    <h3>Goals</h3>
+                    <textarea placeholder="Enter your goals for Week 3"></textarea>
+                </div>
+
+                <div class="goal-section">
+                    <h3>Accomplishments</h3>
+                    <textarea placeholder="Enter your accomplishments for Week 3"></textarea>
+                </div>
+
+                <div class="goal-section">
+                    <h3>Challenges</h3>
+                    <textarea placeholder="Enter challenges faced during Week 3"></textarea>
+                </div>
+
+                <div class="goal-section">
+                    <h3>Next Steps</h3>
+                    <textarea placeholder="Enter next steps after Week 3"></textarea>
+                </div>
+            </div>
+
+            <div id="goal-week4" class="goal-content">
+                <!-- Similar structure for Week 4 -->
+                <div class="goal-section">
+                    <h3>Goals</h3>
+                    <textarea placeholder="Enter your goals for Week 4"></textarea>
+                </div>
+
+                <div class="goal-section">
+                    <h3>Accomplishments</h3>
+                    <textarea placeholder="Enter your accomplishments for Week 4"></textarea>
+                </div>
+
+                <div class="goal-section">
+                    <h3>Challenges</h3>
+                    <textarea placeholder="Enter challenges faced during Week 4"></textarea>
+                </div>
+
+                <div class="goal-section">
+                    <h3>Next Steps</h3>
+                    <textarea placeholder="Enter next steps after Week 4"></textarea>
+                </div>
+            </div>
+        </section>
+
+        <section id="daily-routine">
+            <h2><i class="fas fa-clock"></i> Daily Routine Template</h2>
+
+            <div class="routine-container">
+                <div class="routine-block">
+                    <h3>Morning (2-3 hours)</h3>
+                    <ul class="checklist">
+                        <li><input type="checkbox" id="morning1"><label for="morning1">Review yesterday's progress</label></li>
+                        <li><input type="checkbox" id="morning2"><label for="morning2">Study new concepts</label></li>
+                        <li><input type="checkbox" id="morning3"><label for="morning3">Take detailed notes</label></li>
+                    </ul>
+                </div>
+
+                <div class="routine-block">
+                    <h3>Afternoon (2-3 hours)</h3>
+                    <ul class="checklist">
+                        <li><input type="checkbox" id="afternoon1"><label for="afternoon1">Practical implementation</label></li>
+                        <li><input type="checkbox" id="afternoon2"><label for="afternoon2">Project work</label></li>
+                        <li><input type="checkbox" id="afternoon3"><label for="afternoon3">Solve challenges</label></li>
+                    </ul>
+                </div>
+
+                <div class="routine-block">
+                    <h3>Evening (1-2 hours)</h3>
+                    <ul class="checklist">
+                        <li><input type="checkbox" id="evening1"><label for="evening1">Review day's learning</label></li>
+                        <li><input type="checkbox" id="evening2"><label for="evening2">Plan for tomorrow</label></li>
+                        <li><input type="checkbox" id="evening3"><label for="evening3">Connect with AI community</label></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="skill-tracker">
+            <h2><i class="fas fa-chart-line"></i> Skill Progress Tracker</h2>
+
+            <div class="table-container">
+                <table id="skill-table">
+                    <thead>
+                        <tr>
+                            <th>Skill</th>
+                            <th>Starting Level</th>
+                            <th>Week 1</th>
+                            <th>Week 2</th>
+                            <th>Week 3</th>
+                            <th>Week 4</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Prompt Engineering</td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                        </tr>
+                        <tr>
+                            <td>LangChain</td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                        </tr>
+                        <tr>
+                            <td>RAG Systems</td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                        </tr>
+                        <tr>
+                            <td>Python for AI</td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                        </tr>
+                        <tr>
+                            <td>Automation Tools</td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                        </tr>
+                        <tr>
+                            <td>Vector Databases</td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                        </tr>
+                        <tr>
+                            <td>API Integration</td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="skill-legend">
+                    <p>Rating Scale: 1 (Beginner) to 5 (Expert)</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="progress-tracking">
+            <h2><i class="fas fa-chart-bar"></i> Progress Tracking</h2>
+
+            <div class="skills-container">
+                <div class="skills-column">
+                    <h3>Technical Skills Progress</h3>
+                    <div id="skills-progress" class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                        <div class="progress-stats">
+                            <span>Completion</span>
+                            <span class="progress-percentage">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skills-column">
+                    <h3>Projects Progress</h3>
+                    <div id="projects-progress" class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                        <div class="progress-stats">
+                            <span>Completion</span>
+                            <span class="progress-percentage">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skills-column">
+                    <h3>Job Preparation Progress</h3>
+                    <div id="job-progress" class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                        <div class="progress-stats">
+                            <span>Completion</span>
+                            <span class="progress-percentage">0%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>Created with <i class="fas fa-heart" style="color: var(--danger-color);"></i> for your AI career journey</p>
+            <p>Save your progress regularly by using the Export Data button</p>
+            <div class="social-links">
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-discord"></i></a>
+            </div>
+            <p class="copyright">© 2023 AI Career Roadmap | <a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a></p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
