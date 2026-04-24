@@ -1,0 +1,26 @@
+# MA-crossover strategy configuration.
+# Symbols are NSE equity (EQ) segment. Add/remove freely.
+strategy:
+  name: ma_crossover
+  fast_period: 20
+  slow_period: 50
+
+watchlist:
+  - symbol: RELIANCE
+    exchange: NSE_EQ
+  - symbol: TCS
+    exchange: NSE_EQ
+  - symbol: INFY
+    exchange: NSE_EQ
+  - symbol: HDFCBANK
+    exchange: NSE_EQ
+
+risk:
+  starting_capital: 1000000        # INR 10,00,000 notional for paper
+  per_trade_risk_pct: 1.0          # risk 1% of capital per position
+  max_open_positions: 4
+
+schedule:
+  # Runs daily at 15:25 IST (post-close signal generation on daily bars)
+  cron: "25 15 * * mon-fri"
+  timezone: Asia/Kolkata
