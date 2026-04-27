@@ -1,7 +1,7 @@
 """Typer CLI.
 
-Commands:
-    trading-bot backtest --symbol RELIANCE --from 2024-01-01 --to 2024-12-31
+    trading-bot list-strategies
+    trading-bot backtest --symbol RELIANCE --strategy sweep_vwap_reclaim --from 2024-01-01 --to 2024-12-31 --interval 5
     trading-bot run --dry
     trading-bot run --i-understand-live-trading
     trading-bot status
@@ -9,7 +9,8 @@ Commands:
 from __future__ import annotations
 
 import logging
-from datetime import date, datetime
+from datetime import datetime
+from inspect import signature
 
 import typer
 from rich.console import Console
@@ -21,7 +22,9 @@ from .dhan_client import Instrument
 from .executor import LiveExecutor, PaperExecutor
 from .market_data import DhanMarketData, SyntheticMarketData
 from .portfolio import Portfolio
-from .strategy import MACrossoverStrategy
+from .risk import DailyLossGuard
+from .strategy import STRATEGIES
+from .universe import load_universe, universe_path
 
 app = typer.Typer(add_completion=False, help="Paper-first Dhan trading bot")
 console = Console()
@@ -34,57 +37,90 @@ def _setup_logging(settings: Settings) -> None:
     )
 
 
-def _build_instruments_stub(symbols: list[str]) -> dict[str, Instrument]:
-    # Real security_id lookup requires Dhan's instrument master CSV. For paper
-    # mode with the synthetic data source we fabricate stable placeholders.
-    return {s: Instrument(symbol=s, exchange="NSE_EQ", security_id=f"STUB-{s}") for s in symbols}
+def _build_strategy(name: str, **params):
+    if name not in STRATEGIES:
+        raise typer.BadParameter(f"unknown strategy '{name}'. Try: {', '.join(STRATEGIES)}")
+    cls = STRATEGIES[name]
+    accepted = set(signature(cls).parameters.keys())
+    return cls(**{k: v for k, v in params.items() if k in accepted})
+
+
+def _resolve_instruments(cfg) -> list[Instrument]:
+    if cfg.universe:
+        return load_universe(universe_path(cfg.universe))
+    if cfg.watchlist:
+        return [Instrument(symbol=w.symbol, exchange=w.exchange, security_id=f"STUB-{w.symbol}") for w in cfg.watchlist]
+    raise typer.BadParameter("config has neither `universe` nor `watchlist`")
+
+
+@app.command("list-strategies")
+def list_strategies() -> None:
+    tbl = Table(title="Available strategies")
+    tbl.add_column("Name"); tbl.add_column("Class")
+    for name, cls in STRATEGIES.items():
+        tbl.add_row(name, cls.__name__)
+    console.print(tbl)
 
 
 @app.command()
 def backtest(
     symbol: str = typer.Option(..., "--symbol"),
+    strategy: str = typer.Option("ma_crossover", "--strategy"),
     from_date: datetime = typer.Option(..., "--from", formats=["%Y-%m-%d"]),
     to_date: datetime = typer.Option(..., "--to", formats=["%Y-%m-%d"]),
+    interval: int = typer.Option(0, "--interval", help="Bar minutes (0 = daily)"),
     fast: int = 20,
     slow: int = 50,
+    capital: float = 1_000_000.0,
+    risk_pct: float = 1.0,
     synthetic: bool = typer.Option(True, help="Use synthetic OHLC when Dhan creds not set"),
 ) -> None:
     settings = Settings()
     _setup_logging(settings)
-    strategy = MACrossoverStrategy(fast_period=fast, slow_period=slow)
+    strat = _build_strategy(strategy, fast_period=fast, slow_period=slow)
 
     if synthetic or not settings.dhan_access_token:
         data_source = SyntheticMarketData()
-        console.print("[yellow]Using synthetic market data (no Dhan creds or --synthetic).[/yellow]")
+        console.print("[yellow]Using synthetic market data.[/yellow]")
     else:
         from .dhan_client import DhanClient
         client = DhanClient(settings.dhan_client_id, settings.dhan_access_token)
         data_source = DhanMarketData(client)
 
     instrument = Instrument(symbol=symbol, exchange="NSE_EQ", security_id=f"STUB-{symbol}")
-    result = run_backtest(strategy, data_source, instrument, from_date.date(), to_date.date())
+    result = run_backtest(
+        strat, data_source, instrument, from_date.date(), to_date.date(),
+        starting_cash=capital, risk_pct=risk_pct, interval_minutes=interval,
+    )
 
     console.print(f"[bold]{result.summary()}[/bold]")
+    if not result.trades:
+        return
     tbl = Table(title=f"{symbol} trades")
-    tbl.add_column("Date"); tbl.add_column("Side"); tbl.add_column("Qty"); tbl.add_column("Price")
+    for col in ("Entry", "Exit", "Side", "Qty", "EntryPx", "ExitPx", "P&L", "Out"):
+        tbl.add_column(col)
     for t in result.trades:
-        tbl.add_row(str(t["date"].date()), t["side"], str(t["qty"]), f"{t['price']:.2f}")
+        tbl.add_row(
+            str(t.entry_time)[:16], str(t.exit_time)[:16], t.side, str(t.qty),
+            f"{t.entry:.2f}", f"{t.exit:.2f}", f"{t.pnl:+.2f}", t.reason_out,
+        )
     console.print(tbl)
 
 
 @app.command()
 def run(
-    dry: bool = typer.Option(False, "--dry", help="Wire everything up but do not start scheduler"),
+    dry: bool = typer.Option(False, "--dry"),
     i_understand_live_trading: bool = typer.Option(False, "--i-understand-live-trading"),
     config_path: str = "config/strategy.yaml",
 ) -> None:
     settings = Settings()
     _setup_logging(settings)
     cfg = load_strategy_config(config_path)
-    strategy = MACrossoverStrategy(fast_period=cfg.strategy.fast_period, slow_period=cfg.strategy.slow_period)
+    strat = _build_strategy(cfg.strategy.name, **cfg.strategy.model_dump())
+    instruments = _resolve_instruments(cfg)
 
-    symbols = [w.symbol for w in cfg.watchlist]
-    instruments = _build_instruments_stub(symbols)
+    portfolio = Portfolio(settings.database_url, starting_cash=cfg.risk.starting_capital)
+    guard = DailyLossGuard(cfg.risk.starting_capital, cfg.risk.daily_max_loss_pct)
 
     if settings.execution_mode == ExecutionMode.LIVE:
         if not i_understand_live_trading:
@@ -94,11 +130,10 @@ def run(
         from .dhan_client import DhanClient
         client = DhanClient(settings.dhan_client_id, settings.dhan_access_token)
         data_source = DhanMarketData(client)
-        router = LiveExecutor(client=client, instruments=instruments, settings=settings, confirmed=True)
+        router = LiveExecutor(client=client, instruments={i.symbol: i for i in instruments}, settings=settings, confirmed=True)
         console.print("[bold red]LIVE MODE ENABLED - real orders will be placed.[/bold red]")
     else:
-        portfolio = Portfolio(settings.database_url, starting_cash=cfg.risk.starting_capital)
-        router = PaperExecutor(portfolio=portfolio)
+        router = PaperExecutor(portfolio=portfolio, risk_pct=cfg.risk.per_trade_risk_pct)
         if settings.dhan_access_token:
             from .dhan_client import DhanClient
             client = DhanClient(settings.dhan_client_id, settings.dhan_access_token)
@@ -108,13 +143,17 @@ def run(
             console.print("[yellow]No Dhan creds set - using synthetic market data in paper mode.[/yellow]")
 
     if dry:
-        console.print(f"[green]Dry-run OK.[/green] mode={settings.execution_mode.value} "
-                      f"router={type(router).__name__} source={type(data_source).__name__} "
-                      f"symbols={symbols}")
+        console.print(
+            f"[green]Dry-run OK.[/green] strategy={cfg.strategy.name} mode={settings.execution_mode.value} "
+            f"router={type(router).__name__} source={type(data_source).__name__} "
+            f"universe={cfg.universe} symbols={len(instruments)} "
+            f"capital={cfg.risk.starting_capital:,.0f} risk_pct={cfg.risk.per_trade_risk_pct} "
+            f"daily_max_loss_pct={cfg.risk.daily_max_loss_pct}"
+        )
         return
 
     from .scheduler import start_scheduler
-    start_scheduler(strategy, data_source, router, cfg, instruments)
+    start_scheduler(strat, data_source, router, cfg, instruments, guard)
 
 
 @app.command()
