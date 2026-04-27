@@ -30,27 +30,33 @@ class WatchlistItem(BaseModel):
 
 
 class StrategyParams(BaseModel):
+    model_config = {"extra": "allow"}  # accept arbitrary per-strategy params
     name: str
-    fast_period: int = Field(gt=0)
-    slow_period: int = Field(gt=0)
+    fast_period: int = 20
+    slow_period: int = 50
 
 
 class RiskParams(BaseModel):
     starting_capital: float = Field(gt=0)
     per_trade_risk_pct: float = Field(gt=0, le=100)
     max_open_positions: int = Field(gt=0)
+    daily_max_loss_pct: float = Field(default=3.0, gt=0, le=100)
 
 
 class ScheduleParams(BaseModel):
     cron: str
     timezone: str = "Asia/Kolkata"
+    bar_interval_minutes: int = 5
 
 
 class StrategyConfig(BaseModel):
     strategy: StrategyParams
-    watchlist: List[WatchlistItem]
     risk: RiskParams
     schedule: ScheduleParams
+    # Either a universe name (loaded from config/universe/<name>.csv) or an
+    # inline watchlist for ad-hoc setups.
+    universe: str | None = None
+    watchlist: List[WatchlistItem] | None = None
 
 
 def load_strategy_config(path: str | Path = "config/strategy.yaml") -> StrategyConfig:
