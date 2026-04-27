@@ -21,6 +21,7 @@ from .config import ExecutionMode, Settings, load_strategy_config
 from .dhan_client import Instrument
 from .executor import LiveExecutor, PaperExecutor
 from .market_data import DhanMarketData, SyntheticMarketData
+from .notifications import TelegramNotifier
 from .portfolio import Portfolio
 from .risk import DailyLossGuard
 from .strategy import STRATEGIES
@@ -121,6 +122,11 @@ def run(
 
     portfolio = Portfolio(settings.database_url, starting_cash=cfg.risk.starting_capital)
     guard = DailyLossGuard(cfg.risk.starting_capital, cfg.risk.daily_max_loss_pct)
+    notifier = TelegramNotifier(
+        bot_token=settings.telegram_bot_token, chat_id=settings.telegram_chat_id
+    )
+    if notifier.enabled:
+        console.print("[green]Telegram notifications enabled.[/green]")
 
     if settings.execution_mode == ExecutionMode.LIVE:
         if not i_understand_live_trading:
@@ -130,10 +136,19 @@ def run(
         from .dhan_client import DhanClient
         client = DhanClient(settings.dhan_client_id, settings.dhan_access_token)
         data_source = DhanMarketData(client)
-        router = LiveExecutor(client=client, instruments={i.symbol: i for i in instruments}, settings=settings, confirmed=True)
+        router = LiveExecutor(
+            client=client,
+            instruments={i.symbol: i for i in instruments},
+            settings=settings,
+            confirmed=True,
+            notifier=notifier,
+        )
         console.print("[bold red]LIVE MODE ENABLED - real orders will be placed.[/bold red]")
+        notifier.alert(f"Bot starting in <b>LIVE</b> mode with {len(instruments)} symbols. Strategy={cfg.strategy.name}.")
     else:
-        router = PaperExecutor(portfolio=portfolio, risk_pct=cfg.risk.per_trade_risk_pct)
+        router = PaperExecutor(
+            portfolio=portfolio, risk_pct=cfg.risk.per_trade_risk_pct, notifier=notifier
+        )
         if settings.dhan_access_token:
             from .dhan_client import DhanClient
             client = DhanClient(settings.dhan_client_id, settings.dhan_access_token)
@@ -141,6 +156,7 @@ def run(
         else:
             data_source = SyntheticMarketData()
             console.print("[yellow]No Dhan creds set - using synthetic market data in paper mode.[/yellow]")
+        notifier.send(f"📈 Paper bot started. Strategy=<b>{cfg.strategy.name}</b>, universe={cfg.universe}, symbols={len(instruments)}.")
 
     if dry:
         console.print(
@@ -154,6 +170,22 @@ def run(
 
     from .scheduler import start_scheduler
     start_scheduler(strat, data_source, router, cfg, instruments, guard)
+
+
+@app.command("test-telegram")
+def test_telegram() -> None:
+    """Send a test message via Telegram. Useful for verifying setup."""
+    settings = Settings()
+    n = TelegramNotifier(settings.telegram_bot_token, settings.telegram_chat_id)
+    if not n.enabled:
+        console.print("[red]TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID is empty in .env[/red]")
+        raise typer.Exit(code=1)
+    ok = n.send("✅ <b>Trading bot Telegram setup works!</b>\nYou will get a message here on every paper/live trade.")
+    if ok:
+        console.print("[green]Sent. Check your Telegram chat with the bot.[/green]")
+    else:
+        console.print("[red]Failed to send. Check token/chat_id and try again.[/red]")
+        raise typer.Exit(code=1)
 
 
 @app.command()

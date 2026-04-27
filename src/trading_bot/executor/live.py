@@ -14,6 +14,7 @@ from dataclasses import dataclass
 
 from ..config import ExecutionMode, Settings
 from ..dhan_client import DhanClient, Instrument
+from ..notifications import TelegramNotifier
 from ..strategy import Signal, SignalType
 from .base import OrderRouter
 
@@ -26,6 +27,7 @@ class LiveExecutor(OrderRouter):
     instruments: dict[str, Instrument]
     settings: Settings
     confirmed: bool = False
+    notifier: TelegramNotifier | None = None
 
     def route(self, signal: Signal, qty: int) -> None:
         if signal.type == SignalType.HOLD or qty <= 0:
@@ -48,3 +50,5 @@ class LiveExecutor(OrderRouter):
             price=0,
         )
         log.warning("LIVE order sent: %s %s qty=%s -> %s", signal.type.value, signal.symbol, qty, resp)
+        if self.notifier:
+            self.notifier.trade("live", signal, qty, signal.price)

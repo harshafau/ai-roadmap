@@ -57,6 +57,23 @@ The scheduler also enforces a **daily-loss guard**: realized P&L below
 `risk.daily_max_loss_pct` (default 3% = ₹30,000) stops trading for the rest of
 the session.
 
+## Mobile access (iPhone or Android)
+
+Three independent surfaces; pick what you need:
+
+1. **GitHub mobile app** — view code, commits, branches. Free, no setup
+   beyond installing the app and logging in to your GitHub account.
+2. **Telegram bot** (built in) — push notifications on every paper/live
+   trade with symbol, qty, stop, target, and the strategy reason. Works
+   anywhere you have Telegram. Setup steps in `.env.example`. Verify with
+   `trading-bot test-telegram`.
+3. **Dhan mobile app** — once you go live, real positions and P&L appear
+   in Dhan's official app like any manual trade. Paper-mode trades do NOT
+   appear in Dhan because they're never sent.
+
+Telegram is opt-in: leave the env vars empty and the bot runs silently
+without errors.
+
 ## Risk framework
 
 - Capital: configurable, default ₹10,00,000 (ten lakh).
