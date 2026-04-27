@@ -37,6 +37,34 @@ class DhanClient:
 
         return dhanhq(client_id, access_token)
 
+    def intraday_minute(
+        self,
+        instrument: Instrument,
+        from_date: date,
+        to_date: date,
+        interval: int = 5,
+    ) -> pd.DataFrame:
+        resp = self._sdk.intraday_minute_data(  # type: ignore[attr-defined]
+            security_id=instrument.security_id,
+            exchange_segment=instrument.exchange,
+            instrument_type="EQUITY",
+            from_date=str(from_date),
+            to_date=str(to_date),
+            interval=interval,
+        )
+        data = resp.get("data") or resp
+        df = pd.DataFrame(
+            {
+                "timestamp": pd.to_datetime(data["timestamp"], unit="s"),
+                "open": data["open"],
+                "high": data["high"],
+                "low": data["low"],
+                "close": data["close"],
+                "volume": data["volume"],
+            }
+        ).set_index("timestamp")
+        return df
+
     def historical_daily(
         self,
         instrument: Instrument,

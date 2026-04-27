@@ -23,7 +23,7 @@ class MACrossoverStrategy(Strategy):
         if self.fast_period >= self.slow_period:
             raise ValueError("fast_period must be strictly less than slow_period")
 
-    def generate_signal(self, symbol: str, bars: pd.DataFrame) -> Signal:
+    def generate_signal(self, symbol: str, bars: pd.DataFrame, context=None) -> Signal:
         if len(bars) < self.slow_period + 1:
             return Signal(symbol, SignalType.HOLD, float("nan"), "insufficient history")
 
