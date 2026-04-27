@@ -23,6 +23,11 @@ class Settings(BaseSettings):
     database_url: str = "sqlite:///trading.db"
     log_level: str = "INFO"
 
+    # Optional: set both to receive Telegram push notifications on every trade
+    # plus a daily P&L summary. Leave empty to disable (no errors).
+    telegram_bot_token: str = ""
+    telegram_chat_id: str = ""
+
 
 class WatchlistItem(BaseModel):
     symbol: str

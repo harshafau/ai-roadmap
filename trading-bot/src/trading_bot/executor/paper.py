@@ -3,6 +3,7 @@ from __future__ import annotations
 import logging
 from dataclasses import dataclass, field
 
+from ..notifications import TelegramNotifier
 from ..portfolio import Portfolio
 from ..risk import position_size
 from ..strategy import Signal, SignalType
@@ -17,6 +18,7 @@ class PaperExecutor(OrderRouter):
     risk_pct: float = 1.0
     fixed_qty: int | None = None  # if set, overrides risk-based sizing
     capital_override: float | None = None  # else uses portfolio.starting_cash()
+    notifier: TelegramNotifier | None = None
 
     def route(self, signal: Signal, qty: int) -> None:
         if signal.type == SignalType.HOLD:
@@ -41,6 +43,8 @@ class PaperExecutor(OrderRouter):
             f"{signal.take_profit:.2f}" if signal.take_profit else "-",
             order.reason,
         )
+        if self.notifier:
+            self.notifier.trade("paper", signal, qty, order.price)
 
     def _size(self, signal: Signal) -> int:
         if self.fixed_qty is not None:
