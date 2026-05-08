@@ -22,7 +22,7 @@ A comprehensive one-month roadmap to prepare for AI-related job roles, focusing 
 
 ## Getting Started
 
-1. Visit the [AI Career Roadmap](https://harshafau.github.io/ai-roadmap/)
+1. Visit the [AI Career Roadmap](https://hharsha98.github.io/ai-roadmap/)
 2. Start tracking your progress by checking off completed skills
 3. Follow the weekly schedule to structure your learning
 4. Use the export feature to regularly back up your progress
@@ -32,7 +32,7 @@ A comprehensive one-month roadmap to prepare for AI-related job roles, focusing 
 To run this project locally:
 
 ```bash
-git clone https://github.com/harshafau/ai-roadmap.git
+git clone https://github.com/hharsha98/ai-roadmap.git
 cd ai-roadmap
 # Open index.html in your browser
 ```
